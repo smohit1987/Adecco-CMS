@@ -20,6 +20,8 @@ using CoreGraphics;
 using Google.Analytics;
 using Newtonsoft.Json.Linq;
 
+using MonoTouch.Fabric.Crashlytics;
+
 namespace AdeccoNL.iOS
 {
 	partial class IntroController : BaseController
@@ -124,6 +126,7 @@ namespace AdeccoNL.iOS
 
 		partial void BtnCurrentLoaction_TouchUpInside(UIButton sender)
 		{
+			
 			_searchingLocation = false;
 			// As soon as the app is done launching, begin generating location updates in the location manager
 			if (Manager == null)

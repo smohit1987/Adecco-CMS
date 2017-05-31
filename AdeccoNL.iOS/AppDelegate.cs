@@ -7,6 +7,10 @@ using System.Diagnostics;
 using System.IO;
 using Google.Analytics;
 
+using MonoTouch.Fabric;
+using MonoTouch.Fabric.Crashlytics;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace AdeccoNL.iOS
 {
@@ -60,6 +64,27 @@ namespace AdeccoNL.iOS
     
 			// make the window visible
 			Window.MakeKeyAndVisible();
+
+
+			Setup.EnableCrashReporting(() =>
+		   {
+		      var crashlytics = Crashlytics.SharedInstance;
+		      crashlytics.DebugMode = true;
+		      Crashlytics.StartWithAPIKey("bc21b872cc8e1a687fe564093d1618a4e165179d");
+		      Fabric.With(new NSObject[]{ crashlytics });
+		      AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+		      {
+		         Setup.CaptureManagedInfo(e.ExceptionObject);
+		         Setup.CaptureStackFrames(e.ExceptionObject);
+		         Setup.ThrowExceptionAsNative(e.ExceptionObject);
+		      };
+		      TaskScheduler.UnobservedTaskException += (sender, e) =>
+		      {
+		         Setup.CaptureManagedInfo(e.Exception);
+		         Setup.CaptureStackFrames(e.Exception);
+		         Setup.ThrowExceptionAsNative(e.Exception);
+		      };
+		   }, Path.GetFileNameWithoutExtension(typeof(AppDelegate).Module.Name));
 
 			// We use NSUserDefaults to store a bool value if we are tracking the user or not 
 			var optionsDict = NSDictionary.FromObjectAndKey(new NSString("YES"), new NSString(AllowTrackingKey));

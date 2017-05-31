@@ -48,5 +48,20 @@
 	<array>
 		<string>location</string>
 	</array>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>bc21b872cc8e1a687fe564093d1618a4e165179d</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>KitName</key>
+					<string>Crashlytics</string>
+				</dict>
+			</dict>
+		</array>
+	</dict>
 </dict>
 </plist>

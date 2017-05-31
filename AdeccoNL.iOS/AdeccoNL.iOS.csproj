@@ -19,7 +19,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Distribution: Adecco Group AG (7KB95C949A)</CodesignKey>
+    <CodesignKey>iPhone Developer: Mohit Sharma (255L7KR5Q7)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <MtouchFastDev>true</MtouchFastDev>
     <MtouchLink>SdkOnly</MtouchLink>
@@ -27,7 +27,7 @@
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
     <DeviceSpecificBuild>false</DeviceSpecificBuild>
-    <CodesignProvision>Automatic:AdHoc</CodesignProvision>
+    <CodesignProvision>General iOS Dev profile</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <Optimize>true</Optimize>
@@ -47,7 +47,7 @@
     <IpaIncludeArtwork>true</IpaIncludeArtwork>
     <CodesignProvision>3d789cca-8140-4aa2-82e3-3e1f1d4a25ef</CodesignProvision>
     <MtouchDebug>true</MtouchDebug>
-    <IpaPackageName>AdeccoNL</IpaPackageName>
+    <IpaPackageName>Adecco</IpaPackageName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <Optimize>true</Optimize>
@@ -71,7 +71,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer: Mohit Sharma (255L7KR5Q7)</CodesignKey>
+    <CodesignKey>iPhone Developer</CodesignKey>
     <DeviceSpecificBuild>true</DeviceSpecificBuild>
     <MtouchDebug>true</MtouchDebug>
     <MtouchFastDev>false</MtouchFastDev>
@@ -81,7 +81,7 @@
     <MtouchArch>ARMv7, ARMv7s, ARM64</MtouchArch>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
-    <CodesignProvision>General iOS Dev profile</CodesignProvision>
+    <CodesignProvision></CodesignProvision>
     <BuildIpa>true</BuildIpa>
     <IpaIncludeArtwork>true</IpaIncludeArtwork>
     <OptimizePNGs>false</OptimizePNGs>
@@ -113,6 +113,12 @@
     </Reference>
     <Reference Include="Google.Analytics">
       <HintPath>..\packages\Xamarin.Google.iOS.Analytics.3.17.0.1\lib\Xamarin.iOS10\Google.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoTouch.Fabric">
+      <HintPath>..\packages\MonoTouch.Fabric.1.2.8.1\lib\Xamarin.iOS10\MonoTouch.Fabric.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoTouch.Fabric.Crashlytics">
+      <HintPath>..\packages\MonoTouch.Fabric.Crashlytics.3.1.0.5\lib\Xamarin.iOS10\MonoTouch.Fabric.Crashlytics.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
