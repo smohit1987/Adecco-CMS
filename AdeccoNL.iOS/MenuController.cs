@@ -35,7 +35,7 @@ namespace AdeccoNL.iOS
 		{
 			//List<JobCMS> favJobList = DbHelper.GetFavoriteJobs();
 
-			string favJobs = "Favourite Jobs";
+			//string favJobs = "Favourite Jobs";
 
 			//if (favJobList != null)
 			//{
@@ -44,8 +44,8 @@ namespace AdeccoNL.iOS
 
 			//}
 
-			string[] tableItems = new string[] { "Home", "Branch Locator", favJobs, "About Us","Settings" };
-			string[] tableIcons = new string[] { "home-icon.png", "branch_locator.png", "fav-icon.png", "about-icon.png","setting.png"};
+			string[] tableItems = new string[] { "Home", "Branch Locator","Settings" };
+			string[] tableIcons = new string[] { "home-icon.png", "branch_locator.png","setting.png"};
 
 			tblView.Source = new TableSource(tableItems, tableIcons, this);
 			tblView.TableHeaderView = new UIImageView(UIImage.FromBundle("header-180"));
@@ -140,8 +140,10 @@ namespace AdeccoNL.iOS
 						menuController.NavController.PushViewController(_branchSearchVC, true);
 
 				}
-				else if (indexPath.Row == 2)
+				/*
+				 * else if (indexPath.Row == 2)
 				{
+					// Branch Locator
 					var searchResultVC = (SearchResultVC)menuController.Storyboard.InstantiateViewController("SearchResultVC");
 					searchResultVC.jobList = DbHelper.GetFavoriteJobs();
 					searchResultVC.isFavoriteJob = true;
@@ -163,9 +165,9 @@ namespace AdeccoNL.iOS
 						menuController.NavController.PushViewController(_webViewController, true);
 
 				}
+				*/
 
-
-				else if (indexPath.Row == 4)
+				else if (indexPath.Row == 2)
 				{
 					// Setting us 
 					var _settingViewContrroler = (SettingViewContrroler)menuController.Storyboard.InstantiateViewController("SettingViewContrroler");

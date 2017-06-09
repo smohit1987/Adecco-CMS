@@ -386,6 +386,10 @@
     <BundleResource Include="Resources\Truck%402x.png" />
     <BundleResource Include="Resources\View Details.png" />
     <BundleResource Include="Resources\View Details%402x.png" />
+    <BundleResource Include="Resources\search-bg.png" />
+    <BundleResource Include="Resources\search-bg%402x.png" />
+    <BundleResource Include="Resources\TxtClear.png" />
+    <BundleResource Include="Resources\TxtClear%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="iTunesArtwork" />

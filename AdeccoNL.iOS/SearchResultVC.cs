@@ -107,7 +107,8 @@ namespace AdeccoNL.iOS
 			tblView.Source = new TableSource(jobList, this, this.isFavoriteJob);
 
 			//#EEEEEE   light Grey color 
-			this.headerLabel.BackgroundColor = UIColor.Clear.FromHexString("##EEEEEE", 1.0f);
+			this.headerLabel.BackgroundColor = UIColor.White;
+           // this.headerLabel.BackgroundColor = UIColor.Clear.FromHexString("##EEEEEE", 1.0f);
 
 
 			if (!isFavoriteJob)
@@ -115,7 +116,7 @@ namespace AdeccoNL.iOS
 				this.FavoriteButtonWithCount(this.NavigationItem);
 				this.headerLabel.Layer.CornerRadius = 0.0f;
 				this.headerLabel.Layer.BorderWidth = 1.0f;
-				this.headerLabel.Layer.BorderColor = UIColor.Gray.CGColor;
+				this.headerLabel.Layer.BorderColor = UIColor.LightGray.CGColor;
 				this.headerLabel.Text = "  " + Constants.JobCount;
 				this.headerLabel.AdjustsFontSizeToFitWidth = true;
 			}
@@ -129,8 +130,127 @@ namespace AdeccoNL.iOS
 			Gai.SharedInstance.DefaultTracker.Set(GaiConstants.ScreenName, "Job Listing");
 			Gai.SharedInstance.DefaultTracker.Send(DictionaryBuilder.CreateScreenView().Build());
 
+            this.appliedFilterList();
 
 		}
+
+		void appliedFilterList()
+		{
+			List<SelectedFacets> selectedFacetsList = new List<SelectedFacets>();
+
+			if (!Constants.jobSearchResponse.ContainsKey("selectedFacetsList"))
+			{
+				tblView.TableHeaderView = new UIView();
+				//Table.TableFooterView = new UIView();
+
+				return;
+
+			}
+			else
+			{
+				selectedFacetsList = Constants.jobSearchResponse["selectedFacetsList"];
+
+				if (selectedFacetsList.Count < 1)
+				{
+					tblView.TableHeaderView = new UIView();
+					//Table.TableFooterView = new UIView();
+
+					return;
+				}
+
+			}
+
+			float scrollheight = 50.0f;
+
+			//if ((selectedFacetsList.Count * 40) < 120)
+			//	scrollheight = selectedFacetsList.Count * 40 + 5;
+
+			UIScrollView scrollView = new UIScrollView
+			{
+				Frame = new CGRect(0, 0, tblView.Frame.Width, scrollheight),
+				//ContentSize = new CGSize(Table.Frame.Size.Width, selectedFacetsList.Count * 40),
+				BackgroundColor = UIColor.Clear.FromHexString("##EEEEEE", 1.0f),
+				AutoresizingMask = UIViewAutoresizing.FlexibleWidth
+			};
+
+
+			float xPos = 5.0f, yPos = 10.0f;
+			int index = 0;
+
+			float maxButtonWidth = (float)tblView.Frame.Size.Width;
+
+			foreach (SelectedFacets aSelectedFacets in selectedFacetsList)
+			{
+				var titleString = new NSString(aSelectedFacets.keyName);
+
+				CGSize size = titleString.GetSizeUsingAttributes(new UIStringAttributes { Font = UIFont.SystemFontOfSize(12) });
+
+				UIButton btn = new UIButton(UIButtonType.Custom);
+				btn.SetTitle("  " + aSelectedFacets.keyName, UIControlState.Normal);
+				btn.Frame = new RectangleF(xPos, yPos, (float)size.Width + 50, 30);
+
+				maxButtonWidth = xPos + (float)size.Width + 50;
+
+				xPos = maxButtonWidth + 5;
+
+
+
+				btn.SetTitleColor(UIColor.Black, UIControlState.Normal);
+				btn.Font = UIFont.SystemFontOfSize(12);
+				btn.BackgroundColor = UIColor.Clear.FromHexString("##FFFFFF", 1.0f);
+				btn.Layer.BorderColor = UIColor.LightGray.CGColor;
+				btn.Layer.BorderWidth = 0.5f;
+				btn.Layer.CornerRadius = 2.0f;
+				btn.Layer.MasksToBounds = true;
+				btn.ClipsToBounds = true;
+				btn.TouchUpInside += removeSelectedFilter;
+				btn.Tag = index;
+				btn.ShowsTouchWhenHighlighted = true;
+				btn.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
+
+				index++;
+				scrollView.AddSubview(btn);
+
+				UIImageView imgView = new UIImageView();
+				imgView.Image = UIImage.FromBundle("grey-cross-icon.png");
+				imgView.ContentMode = UIViewContentMode.ScaleAspectFit;
+				//imgView.Frame = new RectangleF((float)(btn.Frame.GetMaxX() - 10), (float)(btn.Frame.Y - 6), 16, 16);
+				imgView.Frame = new RectangleF((float)(btn.Frame.GetMaxX() - 22), 17, 16, 16);
+
+				scrollView.AddSubview(imgView);
+
+				//tableHeaderView.AddSubview(btn);
+
+				//yPos = yPos + 35;
+
+			}
+
+			scrollView.ContentSize = new CGSize(maxButtonWidth, scrollheight);
+
+			//Table.TableFooterView = new UIView();
+			tblView.TableHeaderView = scrollView;
+
+
+			//CGRect tableFrame = tblView.Frame;
+			//tableFrame.Y = 0;
+			//tblView.Frame = tableFrame;
+
+
+			tblView.ReloadData();
+		}
+
+		public void removeSelectedFilter(object sender, EventArgs e)
+		{
+			UIButton _filterButton = sender as UIButton;
+
+			List<SelectedFacets> selectedFacetsList = Constants.jobSearchResponse["selectedFacetsList"];
+
+			SelectedFacets aSelectedFacets = selectedFacetsList[(int)_filterButton.Tag];
+			Constants.FilterURL = Constants.JobBaseAddress + aSelectedFacets.valueName;
+            this.GetJobSearchData(this._keyword, this._location);
+				
+		 }
+
 
 		void FavoriteButtonWithCount(UINavigationItem navItem)
 		{
@@ -291,6 +411,8 @@ namespace AdeccoNL.iOS
 			//jobList = (System.Collections.Generic.List<AdeccoNL.JobCMS>)jobList.Concat(jobList2);
 
 			tblView.Source = new TableSource(jobList, this, this.isFavoriteJob);
+
+            this.appliedFilterList();
 
 			tblView.ReloadData();
 

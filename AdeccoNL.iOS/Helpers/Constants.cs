@@ -128,10 +128,87 @@ namespace AdeccoNL
 		public static  void setOfflineConfigs(string country, string language)
 		{
 			
-			string region = language;  			if (region == null) 				countryRegion = "NL"; 			else 			{ 				region = region.Substring(3); 				countryRegion = region; 				GoogleLocation = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=##LOCATION##&key=AIzaSyAKaf6N484SZUI6BojKztFkZGSC38uvuuw&components=country:" + countryRegion.ToLower() + "&types=(regions)";  			}  			JobBaseAddress = "http://www.adecco." + region; 			JobDetailCurrentLanguage = language; 			JobDetailSiteName = "adecco." + region;   			if (country == null || country.Equals("Adecco Netherlands")) 			{ 				//nl  				JobBaseAddress = "http://www.adecco.nl"; 				JobDetailCurrentLanguage = language; 				JobDetailSiteName = "adecco.nl";  				JobSearchFacetSettingID = "{D444BDE3-4A1D-4C4A-B3AE-D5E9A9B09FD2}"; 				AboutUsURL = JobBaseAddress + "/over-adecco"; 				ShareURL = JobBaseAddress + "/vacature/"; 				TermsConditions = JobBaseAddress + "/terms-of-use"; 				JobSearchFilterURL = JobBaseAddress + "/vacatures?";  			} 			else if (country.Equals("Adecco UK")) 			{ 				JobBaseAddress = "http://www.adecco.co.uk"; 				JobDetailCurrentLanguage = language; 				JobDetailSiteName = "adecco.gb";   				JobSearchFacetSettingID = "{D08FD751-7E37-43AF-9603-CC319E01CFCC}"; 				AboutUsURL = JobBaseAddress + "/about-us/"; 				ShareURL = JobBaseAddress + "/Job/"; 				TermsConditions = JobBaseAddress + "/terms-and-conditions"; 				JobSearchFilterURL = JobBaseAddress + "/job-results?"; 			} 			else if (country.Equals("Adecco France")) 			{ 				JobBaseAddress = "http://www.adecco.fr"; 				JobDetailCurrentLanguage = language; 				JobDetailSiteName = "adecco.fr";  				JobSearchFacetSettingID = "{2FF62F00-3579-42AA-92D2-9139E16B1C4C}"; 				AboutUsURL = JobBaseAddress + "/about-us/"; 				ShareURL = JobBaseAddress + "/Job/"; 				TermsConditions = JobBaseAddress + "/terms-and-conditions"; 				JobSearchFilterURL = JobBaseAddress + "/resultats-offres-emploi?"; 			} 			else if (country.Equals("Adecco Switzerland")) 			{  				JobBaseAddress = "http://www.adecco.ch"; 				JobDetailCurrentLanguage = language; 				JobDetailSiteName = "adecco.ch";   				countryRegion = "CH"; 				JobSearchFacetSettingID = "{F96CE424-BF0F-4592-949B-8B9A6C98FE56}"; 				AboutUsURL = JobBaseAddress + "/" + JobDetailCurrentLanguage + "/about-adecco/"; 				ShareURL = JobBaseAddress + "/Job/"; 				TermsConditions = JobBaseAddress + "/" + JobDetailCurrentLanguage + "/legal"; 				JobSearchFilterURL = JobBaseAddress + "/" + JobDetailCurrentLanguage + "/job-results?";
+			string region = language;
+
+			if (region == null)
+				countryRegion = "NL";
+			else
+			{
+				region = region.Substring(3);
+				countryRegion = region;
+				GoogleLocation = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=##LOCATION##&key=AIzaSyAKaf6N484SZUI6BojKztFkZGSC38uvuuw&components=country:" + countryRegion.ToLower() + "&types=(regions)";
+
+			}
+
+			JobBaseAddress = "http://www.adecco." + region;
+			JobDetailCurrentLanguage = language;
+			JobDetailSiteName = "adecco." + region;
+
+
+			if (country == null || country.Equals("Netherlands"))
+			{
+				//nl 
+				JobBaseAddress = "http://www.adecco.nl";
+				JobDetailCurrentLanguage = language;
+				JobDetailSiteName = "adecco.nl";
+
+				JobSearchFacetSettingID = "{D444BDE3-4A1D-4C4A-B3AE-D5E9A9B09FD2}";
+				AboutUsURL = JobBaseAddress + "/over-adecco";
+				ShareURL = JobBaseAddress + "/vacature/";
+				TermsConditions = JobBaseAddress + "/terms-of-use";
+				JobSearchFilterURL = JobBaseAddress + "/vacatures?";
+
+			}
+			else if (country.Equals("UK"))
+			{
+				JobBaseAddress = "http://www.adecco.co.uk";
+				JobDetailCurrentLanguage = language;
+				JobDetailSiteName = "adecco.gb";
+
+
+				JobSearchFacetSettingID = "{D08FD751-7E37-43AF-9603-CC319E01CFCC}";
+				AboutUsURL = JobBaseAddress + "/about-us/";
+				ShareURL = JobBaseAddress + "/Job/";
+				TermsConditions = JobBaseAddress + "/terms-and-conditions";
+				JobSearchFilterURL = JobBaseAddress + "/job-results?";
+			}
+			else if (country.Equals("France"))
+			{
+				JobBaseAddress = "http://www.adecco.fr";
+				JobDetailCurrentLanguage = language;
+				JobDetailSiteName = "adecco.fr";
+
+				JobSearchFacetSettingID = "{2FF62F00-3579-42AA-92D2-9139E16B1C4C}";
+				AboutUsURL = JobBaseAddress + "/about-us/";
+				ShareURL = JobBaseAddress + "/Job/";
+				TermsConditions = JobBaseAddress + "/terms-and-conditions";
+				JobSearchFilterURL = JobBaseAddress + "/resultats-offres-emploi?";
+			}
+			else if (country.Equals("Switzerland"))
+			{
+
+				JobBaseAddress = "http://www.adecco.ch";
+				JobDetailCurrentLanguage = language;
+				JobDetailSiteName = "adecco.ch";
+
+
+				countryRegion = "CH";
+				JobSearchFacetSettingID = "{F96CE424-BF0F-4592-949B-8B9A6C98FE56}";
+				AboutUsURL = JobBaseAddress + "/" + JobDetailCurrentLanguage + "/about-adecco/";
+				ShareURL = JobBaseAddress + "/Job/";
+				TermsConditions = JobBaseAddress + "/" + JobDetailCurrentLanguage + "/legal";
+				JobSearchFilterURL = JobBaseAddress + "/" + JobDetailCurrentLanguage + "/job-results?";
 
 		    	GoogleLocation = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=##LOCATION##&key=AIzaSyAKaf6N484SZUI6BojKztFkZGSC38uvuuw&components=country:" + countryRegion.ToLower() + "&types=(regions)";
- 			}  			BranchLocator = JobBaseAddress + "/globalweb/branch/branchsearch"; 			CreateJobAlert = JobBaseAddress + "/AdeccoGroup.Global/api/Job/SaveJobAlert/"; 			JobSearchURL = JobBaseAddress + "/AdeccoGroup.Global/api/Job/AsynchronousJobSearch/";  		} 
+
+			}
+
+			BranchLocator = JobBaseAddress + "/globalweb/branch/branchsearch";
+			CreateJobAlert = JobBaseAddress + "/AdeccoGroup.Global/api/Job/SaveJobAlert/";
+			JobSearchURL = JobBaseAddress + "/AdeccoGroup.Global/api/Job/AsynchronousJobSearch/";
+
+		}
+
 	}
 
 	public class JobLocation

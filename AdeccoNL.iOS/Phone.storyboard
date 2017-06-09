@@ -94,7 +94,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Home/search-bg.png" id="132">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search-bg.png" id="132">
                                 <rect key="frame" x="0.0" y="44" width="375" height="306"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -1086,6 +1086,8 @@
         <image name="setting.png" width="25" height="25"/>
         <image name="Truck.png" width="20" height="20"/>
         <image name="View Details.png" width="20" height="20"/>
+        <image name="search-bg.png" width="375" height="280"/>
+        <image name="TxtClear.png" width="20" height="20"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

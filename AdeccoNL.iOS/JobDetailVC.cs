@@ -100,9 +100,9 @@ namespace AdeccoNL.iOS
 			//this.NavigationController.NavigationItem.BackBarButtonItem = new UIBarButtonItem("CustomTitle", UIBarButtonItemStyle.Plain, null);
 
 
-			this.headerBGView.Layer.CornerRadius = 5.0f;
-			this.headerBGView.Layer.BorderWidth = 1.0f;
-			this.headerBGView.Layer.BorderColor = UIColor.White.CGColor;
+			//this.headerBGView.Layer.CornerRadius = 5.0f;
+			//this.headerBGView.Layer.BorderWidth = 1.0f;
+			//this.headerBGView.Layer.BorderColor = UIColor.White.CGColor;
 
 			webView.ScrollView.ScrollEnabled = false;
 			webView.LoadFinished += LoadFinished;
@@ -111,7 +111,8 @@ namespace AdeccoNL.iOS
 
 			//				this.NavigationController.NavigationBar.BarTintColor = UIColor.Red;
 
-			this.btnApplyNow.BackgroundColor = UIColor.Red;
+
+			//this.btnApplyNow.BackgroundColor = UIColor.Red;
 
 	}
 

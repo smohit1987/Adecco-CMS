@@ -173,7 +173,7 @@ namespace AdeccoNL.iOS
 
 			var region = userPref["defaultRegion"];
 
-			string defaultCountry = "Adecco Netherlands";
+			string defaultCountry = "Netherlands";
 			string defaultLanguage = "Dutch";
 			string defaultRegion = "nl-NL";
 
@@ -289,7 +289,8 @@ namespace AdeccoNL.iOS
 			GetJobSearchData("", "");
 
 			// Perform any additional setup after loading the view, typically from a nib.
-			btnJobSearch.BackgroundColor = UIColor.Red; //UIColor.Clear.FromHexString("#ef2e24", 1.0f);
+			btnJobSearch.BackgroundColor = UIColor.White; //UIColor.Clear.FromHexString("#ef2e24", 1.0f);
+			btnJobSearch.SetTitleColor(UIColor.Red,UIControlState.Normal);
 			segmentCtrl.BackgroundColor = UIColor.White;
 			searchBg.TintColor = UIColor.Red;
 
@@ -328,8 +329,29 @@ namespace AdeccoNL.iOS
 				);
 
 
-			this.txtLocation.RightViewMode = UITextFieldViewMode.Always;
-			this.txtLocation.RightView = new UIView(new RectangleF(0, 0, 35, 35));
+			//this.txtLocation.RightViewMode = UITextFieldViewMode.Always;
+			//this.txtLocation.RightView = new UIView(new RectangleF(0, 0, 35, 35));
+
+
+			UIButton clrButton = UIButton.FromType(UIButtonType.Custom);
+			clrButton.SetImage (UIImage.FromFile ("TxtClear.png"), UIControlState.Normal);
+			clrButton.Frame = new RectangleF(0, 0, 20, 20);
+			clrButton.TouchUpInside += (sender, ea) => {
+				txtKeyword.Text = @"";
+				};
+
+			this.txtKeyword.RightViewMode = UITextFieldViewMode.WhileEditing;
+			this.txtKeyword.RightView = clrButton;
+
+			UIButton clrButton2 = UIButton.FromType(UIButtonType.Custom);
+			clrButton2.SetImage (UIImage.FromFile ("TxtClear.png"), UIControlState.Normal);
+			clrButton2.Frame = new RectangleF(0, 0, 20, 20);
+			clrButton2.TouchUpInside += (sender, ea) => {
+				txtLocation.Text = @"";
+				};
+
+			this.txtLocation.RightViewMode = UITextFieldViewMode.WhileEditing;
+            this.txtLocation.RightView = clrButton2;
 
 			var g = new UITapGestureRecognizer(() => View.EndEditing(true));
 			View.AddGestureRecognizer(g);
@@ -727,7 +749,7 @@ namespace AdeccoNL.iOS
 			ServiceManager jobService = new ServiceManager();
 
 			Dictionary<string, dynamic> serverResponse = await jobService.AsyncJobSearch(jobRequest);
-
+			Constants.jobSearchResponse = serverResponse;
 
 			if (searchJobButtonPressed)
 			{
