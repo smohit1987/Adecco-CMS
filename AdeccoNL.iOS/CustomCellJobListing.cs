@@ -89,7 +89,7 @@ namespace AdeccoNL.iOS
 			{	// iPhone 6+
 				this.titleLabel.Frame = new CGRect(5, 5, 350, 25);
 				this.btnFavJob.Frame = new CGRect(360, 5, 40, 40);
-                this.datePostedLabel.Frame = new CGRect(300, 85, 95, 20);
+                this.datePostedLabel.Frame = new CGRect(300, 60, 95, 20);
 
 			}
 

@@ -96,7 +96,7 @@ namespace AdeccoNL.iOS
 				latest_job = "Latest Jobs";
 				recent_search = "Recent Search";
 
-				Today = "Today";
+				Today = "Added today";
 				Yesterday = "Yesterday";
 
 				Bl_Place = "Location";
@@ -140,7 +140,8 @@ namespace AdeccoNL.iOS
 				Bl_Search = "Ricerca";
 				Bl_Branches = "Filiali";
 				Bl_Map = "Carta geografica";
-			} 
+			}
+
 		}
 	}
 }

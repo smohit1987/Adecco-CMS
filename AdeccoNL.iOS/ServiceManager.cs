@@ -79,6 +79,8 @@
 
 						Constants.TotalJobCount = TotalCount.ToObject<string>();
 						Constants.JobCount = jobsCount.ToObject<string>();
+
+						Constants.JobCount = Constants.JobCount.Replace("xx",Constants.TotalJobCount);
 						JobCMS job = null;
 						jobList = new List<JobCMS>();
 						foreach (JObject jcontent in jobitems.Children<JObject>())
@@ -140,23 +142,36 @@
 			return responseDict;
 		}
 
+
 		/*
+         * POST http://localhost.adeccofr.com/AdeccoGroup.Global/api/SiteCoreDataForMobile/GetSettingsDetails 
+         * HTTP/1.1
+Accept: application/json
+Host: localhost.adeccofr.com
+Content-Length: 115
+Content-Type: application/json
+ 
+{
+   BUKey : "adecco.fr",
+   securityKey : "{46663E05-A6B8-422A-8E13-36CD2B041278}",
+   Language : "fr-fr"
+}
+*/
+
 		  
-		 public async System.Threading.Tasks.Task<List<JobCMS>> AsyncJobSearch(JobRequest jobRequest)
+		public async System.Threading.Tasks.Task<List<string>> GetSettingsDetails(string BUKey, string securityKey,string language)
 		{
-			List<JobCMS> jobList = null;
+			List<string> jobList = null;
 
 
 			var baseAddress = new Uri(Constants.JobBaseAddress);
 			var values = new Dictionary<string, string>();
-			values.Add("filterUrl", jobRequest.FilterURL);
-			values.Add("sfr", Constants.JobDetailSiteName);
-			values.Add("facetSettingId", Constants.JobSearchFacetSettingID);
-			values.Add("currentLanguage", Constants.JobDetailCurrentLanguage);
-			values.Add("IsJobPage", "1");
-			values.Add("clientId", "");
-			values.Add("clientName", "");
-			values.Add("branchId", "");
+			values.Add("Accept", "application/json");
+			values.Add("Content-Type", "application/json");
+			values.Add("BUKey", "adecco.fr");
+			values.Add("securityKey", "{46663E05-A6B8-422A-8E13-36CD2B041278}");
+			values.Add("Language", "fr-fr");
+		
 			var content = new FormUrlEncodedContent(values);
 			var cookieContainer = new CookieContainer();
 
@@ -165,19 +180,25 @@
 			networkHandler.UseSystemProxy = true;
 			networkHandler.CookieContainer = cookieContainer;
 
+			HttpClientHandler handler = new HttpClientHandler()
+			{
+				AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
+				CookieContainer = cookieContainer
+			};
 
-			using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
-			using (var client = new HttpClient(networkHandler))
+
+			//using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
+			using (var client = new HttpClient(handler))
 			{
 				try
 				{
-					cookieContainer.Add(baseAddress, new Cookie("sitenameForRegister", Constants.JobDetailSiteName));
-					cookieContainer.Add(baseAddress, new Cookie("ASP.NET_SessionId", "01pypyigge22sem4bd5mmjba"));
-					cookieContainer.Add(baseAddress, new Cookie("Locale", Constants.JobDetailCurrentLanguage));//ja-JP
-					cookieContainer.Add(baseAddress, new Cookie("userstatus", "candidate"));
-					cookieContainer.Add(baseAddress, new Cookie("IsJobPage", "1"));
+					//cookieContainer.Add(baseAddress, new Cookie("sitenameForRegister", Constants.JobDetailSiteName));
+					//cookieContainer.Add(baseAddress, new Cookie("ASP.NET_SessionId", "01pypyigge22sem4bd5mmjba"));
+					//cookieContainer.Add(baseAddress, new Cookie("Locale", Constants.JobDetailCurrentLanguage));//ja-JP
+					//cookieContainer.Add(baseAddress, new Cookie("userstatus", "candidate"));
+					//cookieContainer.Add(baseAddress, new Cookie("IsJobPage", "1"));
 
-					var httpResponse = await client.PostAsync(Constants.JobSearchURL, content);
+					var httpResponse = await client.PostAsync("http://www.adecco.fr/AdeccoGroup.Global/api/SiteCoreDataForMobile/GetSettingsDetails", content);
 
 
 					if (httpResponse.StatusCode == HttpStatusCode.OK)
@@ -194,38 +215,7 @@
 						dynamic jobsCount = responseObj["Count"];
 						dynamic TotalCount = responseObj["TotalCount"];
 
-						Constants.TotalJobCount = TotalCount.ToObject<string>();
-						Constants.JobCount = jobsCount.ToObject<string>();
-						JobCMS job = null;
-						jobList = new List<JobCMS>();
-						foreach (JObject jcontent in jobitems.Children<JObject>())
-						{
-							job = new JobCMS();
-							job = jcontent.ToObject<JobCMS>();
-							jobList.Add(job);
-						}
-
-						// facet result.
-
-						dynamic presentationFacetResults = responseObj["PresentationFacetResults"];
-
-						List<FacetValue> listFacetValues = new List<FacetValue>();
-						FacetValue facetValue = new FacetValue();
-
-						List<PresentationFacetResult> ListPresentationFacetResult = new List<PresentationFacetResult>();
-
-						PresentationFacetResult _presentationFacetResult = new PresentationFacetResult();
-
-						foreach (JObject jcontent in presentationFacetResults.Children<JObject>())
-						{
-							//presentationFacetResult.ListFacetValues = new List<FacetValue>();
-							_presentationFacetResult = jcontent.ToObject<PresentationFacetResult>();
-							ListPresentationFacetResult.Add(_presentationFacetResult);
-						}
-
-						Console.WriteLine("ListPresentationFacetResult =={0}",ListPresentationFacetResult);
-
-						return jobList;
+					
 					}
 					return jobList;
 				}
@@ -238,7 +228,7 @@
 			}
 			return null;
 		}
-		*/
+
 
 		public async System.Threading.Tasks.Task<JobCIS> GetJobDetails(string JobId)
 		{
@@ -687,8 +677,9 @@
 
 								dynamic responseObj = Newtonsoft.Json.JsonConvert.DeserializeObject(responseContent);
 
+								dynamic jobitems = responseObj["Items"];
 
-								foreach (JObject jcontent in responseObj.Children<JObject>())
+								foreach (JObject jcontent in jobitems.Children<JObject>())
 								{
 									Branch branch = new Branch();
 									branch = jcontent.ToObject<Branch>();

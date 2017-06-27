@@ -562,11 +562,12 @@ namespace AdeccoNL.iOS
 
 		}
 
-
-		void JobSearchButtonPressed(object sender, EventArgs ea)
+		async void JobSearchButtonPressed(object sender, EventArgs ea)
 		{
 
+			//ServiceManager jobService = new ServiceManager();
 
+			//List<string> settings = await jobService.GetSettingsDetails("11", "11", "11");
 
 			NetworkStatus remoteHostStatus = Reachability.RemoteHostStatus();
 
@@ -792,7 +793,6 @@ namespace AdeccoNL.iOS
 				searchResultVC._keyword = this.txtKeyword.Text.Trim();
 				searchResultVC._location = this.txtLocation.Text.Trim();
 				searchResultVC.LocationLatLong = Constants.LocationLatLong;
-				searchResultVC.serverResponse = serverResponse;
 				searchResultVC.aJobRequest = jobRequest;
 				NavController.PushViewController(searchResultVC, true);
 				searchJobButtonPressed = false;
@@ -925,6 +925,7 @@ namespace AdeccoNL.iOS
 					return 65;
 				else
 				{
+					return 90;
 					if (Constants.JobDetailSiteName.Equals("adecco.fr"))
 						return 90;
 					else

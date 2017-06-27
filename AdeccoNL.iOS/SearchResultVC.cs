@@ -26,10 +26,6 @@ namespace AdeccoNL.iOS
 		public Boolean isLoadingMoreData { get; set; }
 		public JobRequest aJobRequest { get; set; }
 
-
-		public Dictionary<string, dynamic> serverResponse { get; set;}
-
-
 		public SearchResultVC(IntPtr handle) : base(handle)
 		{
 			
@@ -54,11 +50,15 @@ namespace AdeccoNL.iOS
 				tblView.Source = new TableSource(jobList, this, this.isFavoriteJob);
 				tblView.ReloadData();
 				this.headerLabel.Text = "  " + Constants.JobCount;
+                this.appliedFilterList();
+
 			}
 			else if (Constants.shouldResetFilter && !isFavoriteJob)
 			{
 				this.GetJobSearchData(this._keyword, this._location);
 				Constants.shouldResetFilter = false;
+                this.appliedFilterList();
+
 			}
 
 
@@ -67,10 +67,7 @@ namespace AdeccoNL.iOS
 				custmFooterView.Hidden = true;
 				horizontalSepratorView.Hidden = true;
 				verticalSeprator.Hidden = true;
-
-
 			}
-
 
 			if (isFavoriteJob)
 			{
@@ -243,6 +240,9 @@ namespace AdeccoNL.iOS
 		{
 			UIButton _filterButton = sender as UIButton;
 
+			//List<SelectedFacets> selectedFacetsList = new List<SelectedFacets>();
+			//selectedFacetsList = Constants.jobSearchResponse["selectedFacetsList"];
+
 			List<SelectedFacets> selectedFacetsList = Constants.jobSearchResponse["selectedFacetsList"];
 
 			SelectedFacets aSelectedFacets = selectedFacetsList[(int)_filterButton.Tag];
@@ -390,9 +390,8 @@ namespace AdeccoNL.iOS
 			//List<JobCMS> jobList2 = await jobService.AsyncJobSearch(jobRequest);
 
 			Dictionary<string, dynamic> responseDict = await jobService.AsyncJobSearch(jobRequest);
+			Constants.jobSearchResponse = responseDict;
 
-			this.serverResponse = responseDict;
-			    
 			List<JobCMS> jobList2  = responseDict["jobList"];
 
 
@@ -470,12 +469,11 @@ namespace AdeccoNL.iOS
 			Gai.SharedInstance.Dispatch(); // Manually dispatch the event immediately // just for demonstration // not much recommended 
 
 
-			Constants.jobSearchResponse = this.serverResponse;
 
 			this.isLoadingMoreData = false;
 
 			var _refineViewController = (RefineViewController)Storyboard.InstantiateViewController("RefineViewController");
-			_refineViewController.presentationFacetResultList = this.serverResponse["presentationFacetResultList"];
+			_refineViewController.presentationFacetResultList = Constants.jobSearchResponse["presentationFacetResultList"];
 			_refineViewController.jobRequest = this.aJobRequest;
 			this.NavigationController.PushViewController(_refineViewController, true);
 
@@ -504,6 +502,8 @@ namespace AdeccoNL.iOS
 
 			public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
 			{
+										return 90;
+
 					if (Constants.JobDetailSiteName.Equals("adecco.fr"))
 						return 90;
 					else

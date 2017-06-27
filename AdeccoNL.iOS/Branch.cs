@@ -29,6 +29,7 @@ namespace AdeccoNL.iOS
 		public string Updated { get; set; }
 		public string ZipCode { get; set; }
 
+
 	}
 
 	public class BranchRequest
