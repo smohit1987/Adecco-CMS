@@ -36,10 +36,6 @@ namespace AdeccoNL.iOS
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton btnDateTime { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton btnFacebook { get; set; }
 
         [Outlet]
@@ -60,10 +56,6 @@ namespace AdeccoNL.iOS
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton btnSalary { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton btnTwitter { get; set; }
 
         [Outlet]
@@ -73,10 +65,6 @@ namespace AdeccoNL.iOS
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel ContractTypeLabel { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel dateLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -105,10 +93,6 @@ namespace AdeccoNL.iOS
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel PostedDateLabel { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel salaryLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -185,11 +169,6 @@ namespace AdeccoNL.iOS
                 btnContractType = null;
             }
 
-            if (btnDateTime != null) {
-                btnDateTime.Dispose ();
-                btnDateTime = null;
-            }
-
             if (btnFacebook != null) {
                 btnFacebook.Dispose ();
                 btnFacebook = null;
@@ -215,11 +194,6 @@ namespace AdeccoNL.iOS
                 btnPostedDate = null;
             }
 
-            if (btnSalary != null) {
-                btnSalary.Dispose ();
-                btnSalary = null;
-            }
-
             if (btnTwitter != null) {
                 btnTwitter.Dispose ();
                 btnTwitter = null;
@@ -233,11 +207,6 @@ namespace AdeccoNL.iOS
             if (ContractTypeLabel != null) {
                 ContractTypeLabel.Dispose ();
                 ContractTypeLabel = null;
-            }
-
-            if (dateLabel != null) {
-                dateLabel.Dispose ();
-                dateLabel = null;
             }
 
             if (descriptionBGView != null) {
@@ -273,11 +242,6 @@ namespace AdeccoNL.iOS
             if (PostedDateLabel != null) {
                 PostedDateLabel.Dispose ();
                 PostedDateLabel = null;
-            }
-
-            if (salaryLabel != null) {
-                salaryLabel.Dispose ();
-                salaryLabel = null;
             }
 
             if (socialNetworkingBGView != null) {

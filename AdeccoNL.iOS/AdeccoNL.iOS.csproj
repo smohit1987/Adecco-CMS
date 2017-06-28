@@ -78,7 +78,7 @@
     <MtouchFloat32>true</MtouchFloat32>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
-    <MtouchArch>ARMv7, ARMv7s, ARM64</MtouchArch>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
     <CodesignProvision></CodesignProvision>
@@ -150,13 +150,13 @@
     <InterfaceDefinition Include="RecentSearchesCell.xib" />
     <InterfaceDefinition Include="Phone.storyboard" />
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
-    <InterfaceDefinition Include="Phone5.storyboard" />
     <InterfaceDefinition Include="CustomCellJobLAert.xib" />
     <InterfaceDefinition Include="CustomCellBranchListing.xib" />
     <InterfaceDefinition Include="HeaderCell.xib" />
     <InterfaceDefinition Include="RefineCell.xib" />
     <InterfaceDefinition Include="MapViewController.xib" />
     <InterfaceDefinition Include="Phone6PluS.storyboard" />
+    <InterfaceDefinition Include="Phone5.storyboard" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
