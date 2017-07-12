@@ -9,6 +9,7 @@ using SQLite.Net;
 using UIKit;
 using CoreGraphics;
 using Google.Analytics;
+using Newtonsoft.Json;
 
 namespace AdeccoNL.iOS
 {
@@ -34,6 +35,8 @@ namespace AdeccoNL.iOS
 
 		public override void ViewWillAppear(bool animated)
 		{
+
+
 			base.ViewWillAppear(animated);
 			tblView.ReloadData();
 
@@ -46,11 +49,15 @@ namespace AdeccoNL.iOS
 			// Refine result if filter appiled.
 			if (Constants.isFileterApplied && !isFavoriteJob)
 			{
-				this.jobList = Constants.jobSearchResponse["jobList"];
-				tblView.Source = new TableSource(jobList, this, this.isFavoriteJob);
-				tblView.ReloadData();
-				this.headerLabel.Text = "  " + Constants.JobCount;
-                this.appliedFilterList();
+				if (Constants.jobSearchResponse.ContainsKey("jobList"))
+				{
+					this.jobList = Constants.jobSearchResponse["jobList"];
+					tblView.Source = new TableSource(jobList, this, this.isFavoriteJob);
+					tblView.ReloadData();
+					this.headerLabel.Text = "  " + Constants.JobCount;
+               	 	this.appliedFilterList();
+				}
+
 
 			}
 			else if (Constants.shouldResetFilter && !isFavoriteJob)
@@ -135,7 +142,7 @@ namespace AdeccoNL.iOS
 		{
 			List<SelectedFacets> selectedFacetsList = new List<SelectedFacets>();
 
-			if (!Constants.jobSearchResponse.ContainsKey("selectedFacetsList"))
+			if (!Constants.jobSearchResponse.ContainsKey("selectedFacetsList") || isFavoriteJob )
 			{
 				tblView.TableHeaderView = new UIView();
 				//Table.TableFooterView = new UIView();
@@ -204,6 +211,13 @@ namespace AdeccoNL.iOS
 				btn.Tag = index;
 				btn.ShowsTouchWhenHighlighted = true;
 				btn.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
+
+				UIImage btnSelectedImg = UIImage.FromBundle("redButton.png");
+
+				btn.SetBackgroundImage(btnSelectedImg,UIControlState.Highlighted);
+				btn.SetTitleColor(UIColor.Black, UIControlState.Highlighted);
+				btn.SetBackgroundImage(btnSelectedImg,UIControlState.Selected);
+				btn.SetTitleColor(UIColor.Black, UIControlState.Selected);
 
 				index++;
 				scrollView.AddSubview(btn);
@@ -392,6 +406,11 @@ namespace AdeccoNL.iOS
 			Dictionary<string, dynamic> responseDict = await jobService.AsyncJobSearch(jobRequest);
 			Constants.jobSearchResponse = responseDict;
 
+			if (!Constants.jobSearchResponse.ContainsKey("jobList"))
+			{
+				BTProgressHUD.Dismiss();
+				return;
+			}
 			List<JobCMS> jobList2  = responseDict["jobList"];
 
 
@@ -406,7 +425,6 @@ namespace AdeccoNL.iOS
 				jobList = jobList2;
 			}
 				
-
 			//jobList = (System.Collections.Generic.List<AdeccoNL.JobCMS>)jobList.Concat(jobList2);
 
 			tblView.Source = new TableSource(jobList, this, this.isFavoriteJob);
@@ -465,16 +483,21 @@ namespace AdeccoNL.iOS
 		partial void FilterButton_TouchUpInside(UIButton sender)
 		{
 
+			if (!Constants.jobSearchResponse.ContainsKey("presentationFacetResultList"))
+			{
+               var alert = UIAlertController.Create("Adecco", "Oops! Something went wrong!", UIAlertControllerStyle.Alert);alert.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+				PresentViewController(alert, animated: true, completionHandler: null);
+				return;
+			}
+
 			Gai.SharedInstance.DefaultTracker.Send(DictionaryBuilder.CreateEvent("Job Search", "Refine_button_press", "AppEvent", null).Build());
 			Gai.SharedInstance.Dispatch(); // Manually dispatch the event immediately // just for demonstration // not much recommended 
-
-
-
 			this.isLoadingMoreData = false;
 
 			var _refineViewController = (RefineViewController)Storyboard.InstantiateViewController("RefineViewController");
 			_refineViewController.presentationFacetResultList = Constants.jobSearchResponse["presentationFacetResultList"];
 			_refineViewController.jobRequest = this.aJobRequest;
+
 			this.NavigationController.PushViewController(_refineViewController, true);
 
 		}
@@ -502,12 +525,12 @@ namespace AdeccoNL.iOS
 
 			public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
 			{
-										return 90;
+					return 90;
 
-					if (Constants.JobDetailSiteName.Equals("adecco.fr"))
-						return 90;
-					else
-						return 120;			
+					//if (Constants.JobDetailSiteName.Equals("adecco.fr"))
+					//	return 90;
+					//else
+					//	return 120;			
 			}
 
 			public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
@@ -651,6 +674,7 @@ namespace AdeccoNL.iOS
 				jobDetailVC.aJob = aJob;
 				jobDetailVC.contractType = aJob.ContractTypeTitle;
 				jobDetailVC.loaction = aJob.JobLocation;
+			    jobDetailVC.isNew = aJob.isExpiredorNew;
 
 				searchResultVC.NavigationController.PushViewController(jobDetailVC, true);
 				tableView.DeselectRow(indexPath, true);

@@ -88,6 +88,10 @@ namespace AdeccoNL.iOS
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel lblNew { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel locationLabel { get; set; }
 
         [Outlet]
@@ -232,6 +236,11 @@ namespace AdeccoNL.iOS
             if (headerBGView != null) {
                 headerBGView.Dispose ();
                 headerBGView = null;
+            }
+
+            if (lblNew != null) {
+                lblNew.Dispose ();
+                lblNew = null;
             }
 
             if (locationLabel != null) {

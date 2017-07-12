@@ -15,6 +15,8 @@ namespace AdeccoNL.iOS
 	{
 		public List<PresentationFacetResult> presentationFacetResultList { get; set;}
 		public JobRequest jobRequest { get; set; }
+		public string FilterURL { get; set; }
+
 
 		protected RefineViewController(IntPtr handle) : base(handle)
 		{
@@ -356,10 +358,11 @@ namespace AdeccoNL.iOS
 
 			BTProgressHUD.Show("Loading...", -1, ProgressHUD.MaskType.Black);
 
-
-			if (!Constants.FilterURL.Contains("&r=") && jobRequest.FilterURL.Contains("&xy"))
+			                            
+			if (!Constants.FilterURL.Contains("&r=") && Constants.FilterURL.Contains("&xy"))
 			{
-				Constants.FilterURL = Constants.FilterURL + "&r=" + Constants.selectedRadius;
+				//Constants.FilterURL = Constants.FilterURL + "&r=" + Constants.selectedRadius;
+				Constants.FilterURL = Constants.FilterURL + Constants.selectedRadius;
 
 			}
 			// Refine result if filter appiled.
@@ -369,13 +372,21 @@ namespace AdeccoNL.iOS
 			ServiceManager jobService = new ServiceManager();
 			Constants.jobSearchResponse  = await jobService.AsyncJobSearch(this.jobRequest);
 
-			this.presentationFacetResultList = Constants.jobSearchResponse["presentationFacetResultList"]; 
 
-			Table.Source = new ExpandableTableSource(this.presentationFacetResultList, Table, this);
+			if (Constants.jobSearchResponse.ContainsKey("presentationFacetResultList"))
+			{
+				this.presentationFacetResultList = Constants.jobSearchResponse["presentationFacetResultList"];
 
-			this.appliedFilterList();
-
-			Table.ReloadData();
+				Table.Source = new ExpandableTableSource(this.presentationFacetResultList, Table, this);
+				this.appliedFilterList();
+				Table.ReloadData();
+			}
+			else
+			{
+				var alert = UIAlertController.Create("Adecco", "Oops! Something went wrong!", UIAlertControllerStyle.Alert);
+				alert.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Default, null));
+				PresentViewController(alert, animated: true, completionHandler: null);
+			}
 
 			BTProgressHUD.Dismiss();
 
@@ -554,7 +565,7 @@ namespace AdeccoNL.iOS
 			tableView.DeselectRow(indexPath, true);
 
 			aFacetValue.isSelected = isSelected;
-
+ 
 			_refineViewController.GetJobSearchData();
 		}
 

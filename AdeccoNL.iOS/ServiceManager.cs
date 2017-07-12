@@ -1,13 +1,16 @@
-﻿	using System;
-	using System.Collections.Generic;
-	using System.Net;
-	using System.Net.Http;
-	using System.Text;
-	using Newtonsoft.Json;
-	using Newtonsoft.Json.Linq;
-	using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.IO;
+using System.IO.Compression;
 
-	namespace AdeccoNL.iOS
+namespace AdeccoNL.iOS
 	{
 	public class ServiceManager
 	{
@@ -29,7 +32,9 @@
 			var values = new Dictionary<string, string>();
 			values.Add("filterUrl", jobRequest.FilterURL);
 			values.Add("sfr", Constants.JobDetailSiteName);
+		//Adecco USA	values.Add("facetSettingId", "{D4739C3F-3DAB-49DE-9C6E-7215979C15BF}");
 			values.Add("facetSettingId", Constants.JobSearchFacetSettingID);
+
 			values.Add("currentLanguage", Constants.JobDetailCurrentLanguage);
 			values.Add("IsJobPage", "1");
 			values.Add("clientId", "");
@@ -56,7 +61,9 @@
 				try
 				{
 					cookieContainer.Add(baseAddress, new Cookie("sitenameForRegister", Constants.JobDetailSiteName));
+					//Adecco USA cookieContainer.Add(baseAddress, new Cookie("ASP.NET_SessionId", "wejofxxqheshv4gzya35sakr"));
 					cookieContainer.Add(baseAddress, new Cookie("ASP.NET_SessionId", "01pypyigge22sem4bd5mmjba"));
+
 					cookieContainer.Add(baseAddress, new Cookie("Locale", Constants.JobDetailCurrentLanguage));//ja-JP
 					cookieContainer.Add(baseAddress, new Cookie("userstatus", "candidate"));
 					cookieContainer.Add(baseAddress, new Cookie("IsJobPage", "1"));
@@ -158,8 +165,80 @@ Content-Type: application/json
 }
 */
 
+
+public async System.Threading.Tasks.Task<List<string>> GetSettingsDetails(string BUKey,string language)
+{
+		List<string> jobList = null;
+
+		string secrtkey = "{46663E05-A6B8-422A-8E13-36CD2B041278}";
+     	string data = "{\nBUKey:" + "\"" + BUKey + "\"" + ",\n" + "Language:" + "\"" + language + "\"" + ",\n" + "securityKey:" + "\"" + secrtkey + "\"" + "\n}";
+
+
+	try
+	{
+		var cookieContainer = new CookieContainer();
+
+		HttpClientHandler handler = new HttpClientHandler()
+		{
+			AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
+			CookieContainer = cookieContainer
+		};
+
+			var _content = new StringContent(data, Encoding.UTF8, "application/json");
+
+
+		using (var client = new HttpClient(handler))
+		{
+			try
+			{
+				client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("gzip"));
+
+				var httpResponse = await client.PostAsync("http://www.adecco.fr/AdeccoGroup.Global/api/SiteCoreDataForMobile/GetSettingsDetails", _content);
+
+
+
+				if (httpResponse.StatusCode == HttpStatusCode.OK)
+				{
+							//            Stream responseStream = responseStream = WebResponse.GetResponseStream();
+
+				//	string responseContent = await httpResponse.Content.ReadAsStringAsync();
+
+					//dynamic responseObj = Newtonsoft.Json.JsonConvert.DeserializeObject(responseContent);
+				
+				 Stream responseStream = await httpResponse.Content.ReadAsStreamAsync();
+				 responseStream = new GZipStream(responseStream, CompressionMode.Decompress);
+                 responseStream = new GZipStream(responseStream, CompressionMode.Decompress);
+
+				StreamReader Reader = new StreamReader(responseStream, Encoding.Default);
+			
+				string res = await Reader.ReadToEndAsync();
+			    responseStream.Close();
+
+
+				}
+		
+	             return jobList;
+
+			}
+			catch (Exception ex)
+			{
+				string error = ex.Message;
+			}
+		}
+	}
+	catch (Exception ex)
+	{
+		Console.WriteLine(ex.ToString());
+
+	}
+
+
+									return jobList;
+		
+		}
+
 		  
-		public async System.Threading.Tasks.Task<List<string>> GetSettingsDetails(string BUKey, string securityKey,string language)
+		public async System.Threading.Tasks.Task<List<string>> GetSettingsDetails2(string BUKey, string securityKey,string language)
 		{
 			List<string> jobList = null;
 
@@ -175,6 +254,10 @@ Content-Type: application/json
 			var content = new FormUrlEncodedContent(values);
 			var cookieContainer = new CookieContainer();
 
+			string secrtkey = "{46663E05-A6B8-422A-8E13-36CD2B041278}";
+			string data = "{\nBUKey:" + "\"" + BUKey + "\"" + ",\n" + "Language:" + "\"" + language + "\"" + ",\n" + "securityKey:" + "\"" + secrtkey + "\"" + "\n}";
+
+			var _content = new StringContent(data, Encoding.UTF8, "application/json");
 
 			CFNetworkHandler networkHandler = new CFNetworkHandler();
 			networkHandler.UseSystemProxy = true;
@@ -190,15 +273,16 @@ Content-Type: application/json
 			//using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
 			using (var client = new HttpClient(handler))
 			{
+			// client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+			 //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("gzip"));
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));//ACCEPT header
+			    client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("gzip"));
+
+
 				try
 				{
-					//cookieContainer.Add(baseAddress, new Cookie("sitenameForRegister", Constants.JobDetailSiteName));
-					//cookieContainer.Add(baseAddress, new Cookie("ASP.NET_SessionId", "01pypyigge22sem4bd5mmjba"));
-					//cookieContainer.Add(baseAddress, new Cookie("Locale", Constants.JobDetailCurrentLanguage));//ja-JP
-					//cookieContainer.Add(baseAddress, new Cookie("userstatus", "candidate"));
-					//cookieContainer.Add(baseAddress, new Cookie("IsJobPage", "1"));
-
-					var httpResponse = await client.PostAsync("http://www.adecco.fr/AdeccoGroup.Global/api/SiteCoreDataForMobile/GetSettingsDetails", content);
+					
+					var httpResponse = await client.PostAsync("http://www.adecco.fr/AdeccoGroup.Global/api/SiteCoreDataForMobile/GetSettingsDetails", _content);
 
 
 					if (httpResponse.StatusCode == HttpStatusCode.OK)
@@ -228,6 +312,7 @@ Content-Type: application/json
 			}
 			return null;
 		}
+
 
 
 		public async System.Threading.Tasks.Task<JobCIS> GetJobDetails(string JobId)

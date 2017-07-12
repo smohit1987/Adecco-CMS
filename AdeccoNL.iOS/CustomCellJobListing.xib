@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="jhh jkhh kjjk kjjkj kjkjfk kjkjkj kjdfjk" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2">
-                        <rect key="frame" x="10" y="5" width="310" height="25"/>
+                        <rect key="frame" x="10" y="5" width="275" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                         <nil key="textColor"/>
@@ -71,6 +71,18 @@
                         <rect key="frame" x="10" y="85" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="21" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
+                        <rect key="frame" x="288" y="9" width="35" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="italicSystem" pointSize="13"/>
+                        <color key="textColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
+                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.22745098039215686" green="0.592156862745098" blue="0.21176470588235294" alpha="1"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -82,6 +94,7 @@
                 <outlet property="titleLabel" destination="2" id="name-outlet-2"/>
                 <outlet property="CategoryLabel" destination="17" id="name-outlet-17"/>
                 <outlet property="CategoryImageView" destination="18" id="name-outlet-18"/>
+                <outlet property="lblNew" destination="21" id="name-outlet-21"/>
             </connections>
             <point key="canvasLocation" x="-30" y="35"/>
         </tableViewCell>
@@ -165,5 +178,6 @@
         <image name="View Details.png" width="20" height="20"/>
         <image name="search-bg.png" width="375" height="280"/>
         <image name="TxtClear.png" width="20" height="20"/>
+        <image name="redButton.png" width="1" height="1"/>
     </resources>
 </document>

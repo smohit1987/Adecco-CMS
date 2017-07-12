@@ -35,6 +35,7 @@ namespace AdeccoNL.iOS
 
 		private static bool _searchingLocation = false;
 
+		JobRequest jobRequest;
 		#region Computed Properties
 
 		public static LocationManager Manager { get; set; }
@@ -195,6 +196,9 @@ namespace AdeccoNL.iOS
 
 			}
 
+			  //   defaultCountry = "USA";
+				 //defaultLanguage = "en-US";
+				 //defaultRegion =   "en-US";
 			// Set translation - localizations
 			Translations.setTranslations(defaultCountry, defaultRegion.ToString());
 			// Set api configuration  
@@ -566,8 +570,10 @@ namespace AdeccoNL.iOS
 		{
 
 			//ServiceManager jobService = new ServiceManager();
+			//List<string> settings = await jobService.GetSettingsDetails("adecco.fr", "fr-Fr");
+			//Console.WriteLine(" settings response = > {0}",settings);
 
-			//List<string> settings = await jobService.GetSettingsDetails("11", "11", "11");
+			//return;
 
 			NetworkStatus remoteHostStatus = Reachability.RemoteHostStatus();
 
@@ -722,7 +728,7 @@ namespace AdeccoNL.iOS
 			BTProgressHUD.Show("Loading...", -1, ProgressHUD.MaskType.Black);
 
 
-			JobRequest jobRequest = new JobRequest();
+			jobRequest = new JobRequest();
 			jobRequest.Keyword = "";
 			jobRequest.Location = "";
 
@@ -781,7 +787,7 @@ namespace AdeccoNL.iOS
 
 			if (jobList == null)
 				jobList = new List<JobCMS>();
-
+			
 			if (searchJobButtonPressed)
 			{
 				if (searchResults == null)
@@ -1083,6 +1089,7 @@ namespace AdeccoNL.iOS
 					jobDetailVC.jobCategory = aJob.JobCategoryTitle;
 					jobDetailVC.aJob = aJob;
 					jobDetailVC.loaction = aJob.JobLocation;
+					jobDetailVC.isNew = aJob.isExpiredorNew;
 
 					_introViewCtrl.NavController.PushViewController(jobDetailVC, true);
 				}

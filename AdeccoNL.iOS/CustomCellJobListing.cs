@@ -73,6 +73,16 @@ namespace AdeccoNL.iOS
 				//this.expImgView.Hidden = tr
 
 			}
+			if (!string.IsNullOrEmpty(aJob.isExpiredorNew))
+			{
+				this.lblNew.Hidden = false;
+				this.lblNew.Layer.CornerRadius = 5.0f;
+
+			}
+			else
+			{
+				this.lblNew.Hidden = true;
+			}
 
 			//btnFavJob.Hidden = true;
 
@@ -83,6 +93,7 @@ namespace AdeccoNL.iOS
 
 				this.titleLabel.Frame = new CGRect(5, 5, 270, 25);
 				this.btnFavJob.Frame =  new CGRect(275, 5, 40, 40);
+                this.datePostedLabel.Frame = new CGRect(220, 60, 95, 20);
 
 			}
 			else if (appDelegate.Window.Frame.Size.Width == 414)

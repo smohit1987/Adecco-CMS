@@ -41,6 +41,7 @@ namespace AdeccoNL
 		public static int DistanceMax = 50;
 		public static string JobSearchFilterURL = JobBaseAddress + "/vacatures?";
 
+		public static JobRequest jobRequest { get; set; }
 
 		public static string GoogleLocation = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=##LOCATION##&key=AIzaSyAKaf6N484SZUI6BojKztFkZGSC38uvuuw";
 		public static string GeoCodeURL = "https://maps.googleapis.com/maps/api/geocode/json";
@@ -167,6 +168,22 @@ namespace AdeccoNL
 
 
 				JobSearchFacetSettingID = "{D08FD751-7E37-43AF-9603-CC319E01CFCC}";
+				AboutUsURL = JobBaseAddress + "/about-us/";
+				ShareURL = JobBaseAddress + "/Job/";
+				TermsConditions = JobBaseAddress + "/terms-and-conditions";
+				JobSearchFilterURL = JobBaseAddress + "/job-results?";
+			}
+			else if (country.Equals("USA"))
+			{
+
+				//"https://www.adeccousa.com/jobs/job-search/?k=&l=&pageNum=1&display=10&jobCategories=ADUS-3300%7c"
+
+				JobBaseAddress = "https://www.adeccousa.com";
+				JobDetailCurrentLanguage = "en-US";
+				JobDetailSiteName = "adeccocms.us";
+
+
+				JobSearchFacetSettingID = "{D4739C3F-3DAB-49DE-9C6E-7215979C15BF}";
 				AboutUsURL = JobBaseAddress + "/about-us/";
 				ShareURL = JobBaseAddress + "/Job/";
 				TermsConditions = JobBaseAddress + "/terms-and-conditions";

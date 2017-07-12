@@ -92,13 +92,12 @@ namespace AdeccoNL.iOS
             AppDelegate appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 			if (appDelegate.Window.Frame.Size.Width == 320 && appDelegate.Window.Frame.Size.Height == 568)
 			{
-
-                this.directionButton.Frame = new CGRect(5, 5, 270, 25);
+				 this.directionButton.Frame = new CGRect(10, 125, 300, 30);
 
 			}
 			else if (appDelegate.Window.Frame.Size.Width == 414)
 			{	// iPhone 6+
-         		 this.directionButton.Frame = new CGRect(310, 85, 90, 23);
+         		 this.directionButton.Frame = new CGRect(10, 125, 394, 30);
 			}
 			//imageView.Frame = new CGRect(ContentView.Bounds.Width - 63, 5, 33, 33);
 			//headingLabel.Frame = new CGRect(5, 4, ContentView.Bounds.Width - 63, 25);

@@ -120,7 +120,9 @@
                                         <real key="value" value="3"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <state key="highlighted" backgroundImage="selectedBG.png" title="JOB SEARCH"/>
+                                <state key="highlighted" backgroundImage="selectedBG.png" title="JOB SEARCH">
+                                    <color key="titleColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
+                                </state>
                                 <state key="selected" backgroundImage="selectedBG.png" title="JOB SEARCH"/>
                             </button>
                             <segmentedControl contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" id="153" clipsSubviews="YES">
@@ -1091,6 +1093,7 @@
         <image name="View Details.png" width="20" height="20"/>
         <image name="search-bg.png" width="375" height="280"/>
         <image name="TxtClear.png" width="20" height="20"/>
+        <image name="redButton.png" width="1" height="1"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

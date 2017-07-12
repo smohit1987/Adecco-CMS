@@ -38,9 +38,8 @@ namespace AdeccoNL.iOS
 
 			if (appDelegate.Window.Frame.Size.Width == 320 && appDelegate.Window.Frame.Size.Height == 568)
 			{
-
-				this.lblKeyword.Frame = new CGRect(5, 5, 270, 25);
-				this.lblLocation.Frame = new CGRect(275, 5, 40, 40);
+				this.lblKeyword.Frame = new CGRect(100, 10, 200, 21);
+                this.lblLocation.Frame = new CGRect(100, 35, 200, 21);
 
 			}
 			else if (appDelegate.Window.Frame.Size.Width == 414)

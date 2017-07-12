@@ -125,5 +125,8 @@
         <image name="setting.png" width="25" height="25"/>
         <image name="Truck.png" width="20" height="20"/>
         <image name="View Details.png" width="20" height="20"/>
+        <image name="search-bg.png" width="375" height="280"/>
+        <image name="TxtClear.png" width="20" height="20"/>
+        <image name="redButton.png" width="1" height="1"/>
     </resources>
 </document>

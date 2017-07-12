@@ -51,6 +51,9 @@ namespace AdeccoNL.iOS
 				appDelegate.storyboard = "Phone";			
 			else if (appDelegate.Window.Frame.Size.Width == 320 && appDelegate.Window.Frame.Size.Height == 568)
 				appDelegate.storyboard = "Phone5";
+			else
+				appDelegate.storyboard = "Phone5";			
+
 
 			//appDelegate.storyboard = "Phone";
 

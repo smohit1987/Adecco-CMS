@@ -84,6 +84,9 @@ namespace AdeccoNL
 		public string Skills { get; set; }
 		public string JobLocation { get; set; }
 		public string EmploymentTypeTitle { get; set; }
+		public string isExpiredorNew { get; set; }
+
+
 
 	}
 	public class JobCIS : Job
@@ -186,7 +189,60 @@ namespace AdeccoNL
 		public static List<string> JobDetailFieldList = new List<string>();
 
 
-		public static void readAppConfigurationSettings() 		{ 			 			JObject elements = JObject.Parse(File.ReadAllText("Config.json")); 			//Console.WriteLine(elements);  			MaxSearchCount = elements["MaxSearchCount"].ToObject<string>(); 			DefaultRadius = elements["DefaultRadius"].ToObject<string>(); 			EnableAutoSuggest = elements["EnableAutoSuggest"].ToObject<bool>(); 			SearchLocationGoogleURL = elements["SearchLocationGoogleURL"].ToObject<string>();   			MaxShortListCount = elements["MaxShortListCount"].ToObject<string>(); 			FacetSettingId = elements["FacetSettingId"].ToObject<string>(); 			BLMaxResultCount = elements["BLMaxResultCount"].ToObject<string>(); 			EnableBranchSearch = elements["EnableBranchSearch"].ToObject<string>(); 			SearchLocationAPIName = elements["SearchLocationAPIName"].ToObject<string>();   			SearchLocationBingAPIKey = elements["SearchLocationBingAPIKey"].ToObject<string>(); 			BLResultSortingOrder = elements["BLResultSortingOrder"].ToObject<string>(); 			SiteDefaultLanguage = elements["SiteDefaultLanguage"].ToObject<string>();  			JobSnippetFieldList = elements["JobSnippetFieldList"].ToObject<List<string>>(); 			JobDetailFieldList = elements["JobDetailFieldList"].ToObject<List<string>>(); 			SocialShare = elements["SocialShare"].ToObject<List<string>>(); 			SiteLanguages = elements["SiteLanguages"].ToObject<List<string>>(); 			BLDistance = elements["BLDistance"].ToObject<List<string>>();   			Console.WriteLine(JobSnippetFieldList);  			// Changes Constant file here. 			Constants.JobSearchFacetSettingID = FacetSettingId;  			// chose max number of result to be shown  			int maxSearchCount = Convert.ToInt32(MaxSearchCount); 			MaxSearchCount = Math.Max(maxSearchCount, 10).ToString();  			Constants.displayCount = MaxSearchCount; 			Constants.maxResults = MaxSearchCount; 			Constants.latestJobsCount = MaxSearchCount;   			// SearchLocation Api - GOOGLE/BING API  			if (SearchLocationAPIName.Equals("Google")) 				Constants.isGoogleLocation = "1"; 			else 				Constants.isGoogleLocation = "0";  			Constants.DistanceDefault = Convert.ToInt32(DefaultRadius); 					 		} 
+		public static void readAppConfigurationSettings()
+		{
+			
+			JObject elements = JObject.Parse(File.ReadAllText("Config.json"));
+			//Console.WriteLine(elements);
+
+			MaxSearchCount = elements["MaxSearchCount"].ToObject<string>();
+			DefaultRadius = elements["DefaultRadius"].ToObject<string>();
+			EnableAutoSuggest = elements["EnableAutoSuggest"].ToObject<bool>();
+			SearchLocationGoogleURL = elements["SearchLocationGoogleURL"].ToObject<string>();
+
+
+			MaxShortListCount = elements["MaxShortListCount"].ToObject<string>();
+			FacetSettingId = elements["FacetSettingId"].ToObject<string>();
+			BLMaxResultCount = elements["BLMaxResultCount"].ToObject<string>();
+			EnableBranchSearch = elements["EnableBranchSearch"].ToObject<string>();
+			SearchLocationAPIName = elements["SearchLocationAPIName"].ToObject<string>();
+
+
+			SearchLocationBingAPIKey = elements["SearchLocationBingAPIKey"].ToObject<string>();
+			BLResultSortingOrder = elements["BLResultSortingOrder"].ToObject<string>();
+			SiteDefaultLanguage = elements["SiteDefaultLanguage"].ToObject<string>();
+
+			JobSnippetFieldList = elements["JobSnippetFieldList"].ToObject<List<string>>();
+			JobDetailFieldList = elements["JobDetailFieldList"].ToObject<List<string>>();
+			SocialShare = elements["SocialShare"].ToObject<List<string>>();
+			SiteLanguages = elements["SiteLanguages"].ToObject<List<string>>();
+			BLDistance = elements["BLDistance"].ToObject<List<string>>();
+
+
+			Console.WriteLine(JobSnippetFieldList);
+
+			// Changes Constant file here.
+			Constants.JobSearchFacetSettingID = FacetSettingId;
+
+			// chose max number of result to be shown 
+			int maxSearchCount = Convert.ToInt32(MaxSearchCount);
+			MaxSearchCount = Math.Max(maxSearchCount, 10).ToString();
+
+			Constants.displayCount = MaxSearchCount;
+			Constants.maxResults = MaxSearchCount;
+			Constants.latestJobsCount = MaxSearchCount;
+
+
+			// SearchLocation Api - GOOGLE/BING API 
+			if (SearchLocationAPIName.Equals("Google"))
+				Constants.isGoogleLocation = "1";
+			else
+				Constants.isGoogleLocation = "0";
+
+			Constants.DistanceDefault = Convert.ToInt32(DefaultRadius);
+					
+		}
+
 	}
 
 }

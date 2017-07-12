@@ -15,7 +15,7 @@ namespace AdeccoNL.iOS
 	partial class MenuController : BaseController
 	{
 		private string _pathToDatabase;
-
+		private bool branchLocatorAvailable {get; set;}
 
 		public MenuController (IntPtr handle) : base (handle)
 		{
@@ -44,10 +44,34 @@ namespace AdeccoNL.iOS
 
 			//}
 
+			var userPref = NSUserDefaults.StandardUserDefaults;
+			string defaultCountry	 = userPref.StringForKey("defaultCountry");
+			if (!string.IsNullOrEmpty(defaultCountry))
+			{
+				if (defaultCountry.Equals("Switzerland"))
+				{
+					this.branchLocatorAvailable = false;
+				}
+				else
+					this.branchLocatorAvailable = true;
+
+			}
+			else
+			{
+              this.branchLocatorAvailable = true;
+			}
+
 			string[] tableItems = new string[] { "Home", "Branch Locator","Settings" };
 			string[] tableIcons = new string[] { "home-icon.png", "branch_locator.png","setting.png"};
 
-			tblView.Source = new TableSource(tableItems, tableIcons, this);
+			// If branch locator is not available 
+			if (!branchLocatorAvailable)
+			{
+ 				tableItems = new string[] { "Home", "Settings" };
+			    tableIcons = new string[] { "home-icon.png", "setting.png"};
+			}
+
+			tblView.Source = new TableSource(tableItems, tableIcons, this, branchLocatorAvailable);
 			tblView.TableHeaderView = new UIImageView(UIImage.FromBundle("header-180"));
 		}
 
@@ -82,11 +106,14 @@ namespace AdeccoNL.iOS
 			MenuController menuController;
 			string CellIdentifier = "TableCell";
 
-			public TableSource(string[] items, string[] icons, MenuController owner)
+			private bool branchLocatorAvailable { get; set;}
+
+			public TableSource(string[] items, string[] icons, MenuController owner, bool aBranchLocatorAvailable)
 			{
 				TableItems = items;
 				TableIcons = icons;
 				menuController = owner;
+				branchLocatorAvailable = aBranchLocatorAvailable;
 			}
 
 			public override nint RowsInSection(UITableView tableview, nint section)
@@ -132,7 +159,7 @@ namespace AdeccoNL.iOS
 						menuController.NavController.PushViewController(introController, true);
 
 				}
-				else if (indexPath.Row == 1)
+				else if (indexPath.Row == 1 && branchLocatorAvailable)
 				{
 					var _branchSearchVC = (BranchSearchVC)menuController.Storyboard.InstantiateViewController("BranchSearchVC");
 
@@ -166,8 +193,7 @@ namespace AdeccoNL.iOS
 
 				}
 				*/
-
-				else if (indexPath.Row == 2)
+				else
 				{
 					// Setting us 
 					var _settingViewContrroler = (SettingViewContrroler)menuController.Storyboard.InstantiateViewController("SettingViewContrroler");

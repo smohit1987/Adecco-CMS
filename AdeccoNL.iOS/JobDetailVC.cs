@@ -35,6 +35,8 @@ namespace AdeccoNL.iOS
 		public string contractType { get; set; }
 
 		public string postingDate { get; set; }
+		public string isNew { get; set; }
+
 		public string jobTitle { get; set; }
 		public JobCMS aJob { get; set; }
 		private string _pathToDatabase;
@@ -137,6 +139,15 @@ namespace AdeccoNL.iOS
 			else
 			{
 				this.titleLabel.Hidden = true;
+			}
+			if (!string.IsNullOrEmpty(this.isNew))
+			{
+				this.lblNew.Hidden = false;
+			}
+			else
+			{
+				this.lblNew.Hidden = true;
+				this.favorateButton.Frame = new CGRect(315, 20, 30, 30);
 			}
 
 			if (aJob.isFavorote)

@@ -68,7 +68,8 @@ namespace AdeccoNL.iOS
 			{
 
 				//this.titleLabel.Frame = new CGRect(5, 5, 270, 25);
-				//this.btnFavJob.Frame = new CGRect(275, 5, 40, 40);
+				//this.nFavJob.Frame = new CGRect(275, 5, 40, 40);
+             this.txtField.Frame = new CGRect(10, 35, 300, 40);
 
 			}
 			else if (appDelegate.Window.Frame.Size.Width == 414)
